@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ezra's Money Tracker</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #eef4ff 0%, #f7f8fb 45%, #f4f6f8 100%);
+            color: #222;
+        }
+
+        .app {
+            max-width: 500px;
+            margin: auto;
+            min-height: 100vh;
+            padding-bottom: 85px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1f6feb, #7c3aed);
+            color: white;
+            padding: 25px 20px;
+            border-bottom-left-radius: 28px;
+            border-bottom-right-radius: 28px;
+            box-shadow: 0 8px 20px rgba(31, 111, 235, 0.25);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 27px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.92;
+        }
+
+        .section {
+            padding: 15px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 18px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .summary-box {
+            background-color: #f1f5ff;
+            padding: 12px;
+            border-radius: 14px;
+        }
+
+        .summary-box small {
+            display: block;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .summary-box strong {
+            font-size: 20px;
+            color: #1f6feb;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
+            border-radius: 11px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #1f6feb;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background-color: #9ba7ba;
+            cursor: not-allowed;
+        }
+
+        .danger-btn {
+            background-color: #d62828;
+        }
+
+        .secondary-btn {
+            background-color: #444;
+        }
+
+        .tracker-card {
+            border-left: 6px solid #1f6feb;
+        }
+
+        .tracker-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tracker-top h3 {
+            margin: 0;
+        }
+
+        .balance {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0a7a35;
+        }
+
+        .low-balance {
+            color: #d62828;
+        }
+
+        .analysis-box {
+            background: #f8fbff;
+            border: 1px solid #e1e9ff;
+            padding: 12px;
+            border-radius: 14px;
+            margin-top: 12px;
+        }
+
+        .analysis-box h4 {
+            margin: 0 0 8px;
+            color: #1f6feb;
+        }
+
+        .analysis-box p, .tracker-card p, .expense-item p {
+            margin: 6px 0;
+        }
+
+        .warning-text {
+            color: #d62828;
+            font-weight: bold;
+        }
+
+        .good-text {
+            color: #0a7a35;
+            font-weight: bold;
+        }
+
+        .expense-item {
+            background-color: #f7f7f7;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        .deleted-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background-color: #fff0d9;
+            color: #9a5a00;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .empty-message {
+            color: #666;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 500px;
+            margin: auto;
+            background-color: white;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+        }
+
+        .nav button {
+            background-color: white;
+            color: #444;
+            border-radius: 0;
+            margin: 0;
+            padding: 12px 5px;
+            font-size: 13px;
+            border: none;
+        }
+
+        .nav button.active {
+            color: #1f6feb;
+            font-weight: bold;
+            border-top: 3px solid #1f6feb;
+        }
+
+        .small-text {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .auth-wrapper {
+            min-height: 100vh;
+            max-width: 500px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            width: 100%;
+            background-color: white;
+            padding: 25px;
+            border-radius: 22px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+            text-align: center;
+        }
+
+        .auth-card h1 {
+            margin-bottom: 5px;
+            color: #1f6feb;
+        }
+
+        .auth-card p {
+            color: #555;
+            margin-top: 0;
+        }
+
+        .auth-error {
+            color: #d62828;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .auth-success {
+            color: #0a7a35;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logout-btn {
+            width: auto;
+            padding: 8px 12px;
+            margin-top: 0;
+            background-color: white;
+            color: #1f6feb;
+            font-size: 13px;
+        }
+
+        .sync-status {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background-color: rgba(255, 255, 255, 0.18);
+            font-size: 13px;
+        }
+
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #1f6feb, #7c3aed);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .welcome-card {
+            max-width: 420px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 28px;
+            text-align: center;
+            padding: 35px 22px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.20);
+            animation: popIn 0.45s ease;
+        }
+
+        .welcome-icon {
+            width: 72px;
+            height: 72px;
+            margin: auto;
+            border-radius: 50%;
+            background: #f1f5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        .welcome-card h1 {
+            color: #1f6feb;
+            margin-bottom: 8px;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.92);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="authScreen" class="auth-wrapper">
+        <div class="auth-card">
+            <h1 id="authTitle">Ezra's Money Tracker</h1>
+            <p>Sign in to sync your money data across your laptop and phone.</p>
+
+            <input type="email" id="emailInput" placeholder="Email address">
+            <input type="password" id="passwordInput" placeholder="Password">
+
+            <button id="signInButton" onclick="signInUser()">Sign In</button>
+            <button id="signUpButton" class="secondary-btn" onclick="signUpUser()">Create Account</button>
+            <p id="authError" class="auth-error"></p>
+            <p id="authSuccess" class="auth-success"></p>
+        </div>
+    </div>
+
+    <div id="welcomeScreen" class="welcome-screen hidden">
+        <div class="welcome-card">
+            <div class="welcome-icon">💸</div>
+            <h1 id="welcomeTitle">Welcome, Ezra</h1>
+            <p>Your cloud money dashboard is ready.</p>
+        </div>
+    </div>
+
+    <div id="appContainer" class="app hidden">
+        <div class="header">
+            <div class="header-top">
+                <div>
+                    <h1 id="appTitleText">Ezra's Money Tracker</h1>
+                    <p id="appSubtitleText">Welcome back, Ezra.</p>
+                    <span id="syncStatus" class="sync-status">Cloud sync active</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div id="homePage" class="page section">
+            <div class="card">
+                <h2>Full Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <small>Total Allowance</small>
+                        <strong>GHS <span id="totalAllowance">0</span></strong>
+                    </div>
+                    <div class="summary-box">
+                        <small>Total Spent</small>
+                        <strong>GHS <span id="totalSpent">0</span></strong>
+                    </div>
+                    <div class="summary-box">
+                        <small>Total Balance</small>
+                        <strong>GHS <span id="totalBalance">0</span></strong>
+                    </div>
+                    <div class="summary-box">
+                        <small>Trackers</small>
+                        <strong><span id="trackerCount">0</span></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Overall Analysis</h2>
+                <div id="overallAnalysis"></div>
+            </div>
+
+            <h2>Your Trackers</h2>
+            <div id="trackerList"></div>
+        </div>
+
+        <div id="trackerPage" class="page section hidden">
+            <div class="card">
+                <h2>Customize App</h2>
+                <p class="small-text">This customization syncs across your devices.</p>
+
+                <input type="text" id="ownerNameInput" placeholder="Your name e.g. Ezra">
+                <input type="text" id="appNameInput" placeholder="App name e.g. Ezra's Money Tracker">
+
+                <button onclick="saveSettings()">Save Customization</button>
+            </div>
+
+            <div class="card">
+                <h2>Move Old Device Data to Cloud</h2>
+                <p class="small-text">Use this once on the device where your old local data already exists.</p>
+                <button class="secondary-btn" onclick="importLocalDataToCloud()">Import Old Local Data</button>
+            </div>
+
+            <div class="card">
+                <h2>Add New Tracker</h2>
+                <p class="small-text">Examples: School Allowance, Home Allowance, Transport Money, Food Budget.</p>
+
+                <input type="text" id="trackerName" placeholder="Tracker name">
+                <input type="number" id="trackerAmount" placeholder="Starting amount in GHS">
+
+                <button onclick="addTracker()">Add Tracker</button>
+            </div>
+
+            <div class="card">
+                <h2>Add Money to Existing Tracker</h2>
+                <p class="small-text">Use this when you receive extra allowance.</p>
+
+                <select id="topUpTracker"></select>
+                <input type="number" id="topUpAmount" placeholder="Amount to add in GHS">
+
+                <button onclick="topUpTracker()">Add Money</button>
+            </div>
+        </div>
+
+        <div id="expensePage" class="page section hidden">
+            <div class="card">
+                <h2>Add Expense</h2>
+                <p class="small-text">Choose which allowance the expense should deduct from.</p>
+
+                <select id="expenseTracker"></select>
+                <input type="date" id="expenseDate">
+                <input type="text" id="expenseCategory" placeholder="Category e.g. Food, Transport">
+                <input type="text" id="expenseDescription" placeholder="Description e.g. Lunch at campus">
+                <input type="number" id="expenseAmount" placeholder="Amount spent in GHS">
+
+                <button onclick="addExpense()">Add Expense</button>
+            </div>
+        </div>
+
+        <div id="historyPage" class="page section hidden">
+            <div class="card">
+                <h2>Expense History</h2>
+                <p class="small-text">Deleted tracker expenses will still stay here.</p>
+                <input type="text" id="searchBox" placeholder="Search by category, description, or tracker" onkeyup="displayHistory()">
+            </div>
+
+            <div id="historyList"></div>
+        </div>
+    </div>
+
+    <div id="bottomNav" class="nav hidden">
+        <button id="homeBtn" class="active" onclick="showPage('homePage', 'homeBtn')">Home</button>
+        <button id="trackerBtn" onclick="showPage('trackerPage', 'trackerBtn')">Trackers</button>
+        <button id="expenseBtn" onclick="showPage('expensePage', 'expenseBtn')">Spend</button>
+        <button id="historyBtn" onclick="showPage('historyPage', 'historyBtn')">History</button>
+    </div>
+
+    <script type="module">
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+        /*
+            IMPORTANT:
+            1. Paste your Supabase Project URL below.
+            2. The publishable key is okay in frontend code when RLS is enabled.
+            3. Never place your sb_secret key here.
+        */
+        const SUPABASE_URL = "https://lukvbvjiptsozgrozfkv.supabase.coRE";
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_1mqU4kwtV-u9vBROR3-B0g_m3Oqv7fn";
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+        let currentUser = null;
+        let trackers = [];
+        let expenses = [];
+        let settings = {
+            ownerName: "Ezra",
+            appName: "Ezra's Money Tracker"
+        };
+
+        function setLoading(isLoading) {
+            document.getElementById("signInButton").disabled = isLoading;
+            document.getElementById("signUpButton").disabled = isLoading;
+        }
+
+        function clearAuthMessages() {
+            document.getElementById("authError").innerText = "";
+            document.getElementById("authSuccess").innerText = "";
+        }
+
+        function showAuthScreen() {
+            document.getElementById("authScreen").classList.remove("hidden");
+            document.getElementById("appContainer").classList.add("hidden");
+            document.getElementById("bottomNav").classList.add("hidden");
+            document.getElementById("welcomeScreen").classList.add("hidden");
+        }
+
+        function unlockApp() {
+            document.getElementById("authScreen").classList.add("hidden");
+            document.getElementById("appContainer").classList.remove("hidden");
+            document.getElementById("bottomNav").classList.remove("hidden");
+            document.getElementById("emailInput").value = "";
+            document.getElementById("passwordInput").value = "";
+            showWelcomeScreen();
+        }
+
+        function showWelcomeScreen() {
+            document.getElementById("welcomeTitle").innerText = "Welcome, " + settings.ownerName;
+            document.getElementById("welcomeScreen").classList.remove("hidden");
+
+            setTimeout(function() {
+                document.getElementById("welcomeScreen").classList.add("hidden");
+            }, 1300);
+        }
+
+        async function signUpUser() {
+            clearAuthMessages();
+            setLoading(true);
+
+            let email = document.getElementById("emailInput").value.trim();
+            let password = document.getElementById("passwordInput").value;
+
+            if (email == "" || password == "") {
+                document.getElementById("authError").innerText = "Please enter your email and password.";
+                setLoading(false);
+                return;
+            }
+
+            if (password.length < 6) {
+                document.getElementById("authError").innerText = "Password must be at least 6 characters.";
+                setLoading(false);
+                return;
+            }
+
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                document.getElementById("authError").innerText = error.message;
+                setLoading(false);
+                return;
+            }
+
+            if (data.session == null) {
+                document.getElementById("authSuccess").innerText = "Account created. Check your email to confirm before signing in.";
+                setLoading(false);
+                return;
+            }
+
+            currentUser = data.user;
+            await ensureUserSettings();
+            await loadCloudData();
+            unlockApp();
+            setLoading(false);
+        }
+
+        async function signInUser() {
+            clearAuthMessages();
+            setLoading(true);
+
+            let email = document.getElementById("emailInput").value.trim();
+            let password = document.getElementById("passwordInput").value;
+
+            if (email == "" || password == "") {
+                document.getElementById("authError").innerText = "Please enter your email and password.";
+                setLoading(false);
+                return;
+            }
+
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                document.getElementById("authError").innerText = error.message;
+                setLoading(false);
+                return;
+            }
+
+            currentUser = data.user;
+            await ensureUserSettings();
+            await loadCloudData();
+            unlockApp();
+            setLoading(false);
+        }
+
+        async function logout() {
+            await supabase.auth.signOut();
+            currentUser = null;
+            trackers = [];
+            expenses = [];
+            showAuthScreen();
+        }
+
+        async function ensureUserSettings() {
+            if (currentUser == null) {
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from("user_settings")
+                .select("user_id, owner_name, app_name")
+                .eq("user_id", currentUser.id)
+                .maybeSingle();
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            if (data == null) {
+                await supabase.from("user_settings").insert({
+                    user_id: currentUser.id,
+                    owner_name: settings.ownerName,
+                    app_name: settings.appName
+                });
+            }
+        }
+
+        async function loadCloudData() {
+            if (currentUser == null) {
+                return;
+            }
+
+            const trackersResult = await supabase
+                .from("trackers")
+                .select("*")
+                .eq("user_id", currentUser.id)
+                .order("created_at", { ascending: true });
+
+            if (trackersResult.error) {
+                document.getElementById("syncStatus").innerText = "Sync issue";
+                alert(trackersResult.error.message);
+                return;
+            }
+
+            const expensesResult = await supabase
+                .from("expenses")
+                .select("*")
+                .eq("user_id", currentUser.id)
+                .order("created_at", { ascending: true });
+
+            if (expensesResult.error) {
+                document.getElementById("syncStatus").innerText = "Sync issue";
+                alert(expensesResult.error.message);
+                return;
+            }
+
+            const settingsResult = await supabase
+                .from("user_settings")
+                .select("owner_name, app_name")
+                .eq("user_id", currentUser.id)
+                .maybeSingle();
+
+            if (settingsResult.error) {
+                document.getElementById("syncStatus").innerText = "Sync issue";
+                alert(settingsResult.error.message);
+                return;
+            }
+
+            trackers = trackersResult.data || [];
+            expenses = expensesResult.data || [];
+
+            if (settingsResult.data != null) {
+                settings = {
+                    ownerName: settingsResult.data.owner_name,
+                    appName: settingsResult.data.app_name
+                };
+            }
+
+            document.getElementById("syncStatus").innerText = "Cloud sync active";
+            refreshApp();
+        }
+
+        async function saveSettings() {
+            let ownerName = document.getElementById("ownerNameInput").value.trim();
+            let appName = document.getElementById("appNameInput").value.trim();
+
+            if (ownerName == "" || appName == "") {
+                alert("Please enter your name and app name.");
+                return;
+            }
+
+            const { error } = await supabase
+                .from("user_settings")
+                .upsert({
+                    user_id: currentUser.id,
+                    owner_name: ownerName,
+                    app_name: appName
+                });
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            await loadCloudData();
+            alert("Customization saved successfully.");
+        }
+
+        async function addTracker() {
+            let name = document.getElementById("trackerName").value.trim();
+            let amount = Number(document.getElementById("trackerAmount").value);
+
+            if (name == "" || amount <= 0) {
+                alert("Please enter tracker name and a valid amount.");
+                return;
+            }
+
+            const { error } = await supabase.from("trackers").insert({
+                id: String(Date.now()),
+                user_id: currentUser.id,
+                name: name,
+                starting_amount: amount,
+                added_money: 0,
+                created_date: getTodayString()
+            });
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            document.getElementById("trackerName").value = "";
+            document.getElementById("trackerAmount").value = "";
+            await loadCloudData();
+            alert("Tracker added successfully.");
+        }
+
+        async function topUpTracker() {
+            let trackerId = document.getElementById("topUpTracker").value;
+            let amount = Number(document.getElementById("topUpAmount").value);
+
+            if (trackerId == "0" || amount <= 0) {
+                alert("Please choose a tracker and enter a valid amount.");
+                return;
+            }
+
+            let selectedTracker = getTrackerById(trackerId);
+
+            if (selectedTracker == null) {
+                alert("Tracker not found.");
+                return;
+            }
+
+            const { error } = await supabase
+                .from("trackers")
+                .update({ added_money: Number(selectedTracker.added_money) + amount })
+                .eq("id", trackerId)
+                .eq("user_id", currentUser.id);
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            document.getElementById("topUpAmount").value = "";
+            await loadCloudData();
+            alert("Money added successfully.");
+        }
+
+        async function addExpense() {
+            let trackerId = document.getElementById("expenseTracker").value;
+            let date = document.getElementById("expenseDate").value;
+            let category = document.getElementById("expenseCategory").value.trim();
+            let description = document.getElementById("expenseDescription").value.trim();
+            let amount = Number(document.getElementById("expenseAmount").value);
+
+            if (trackerId == "0" || date == "" || category == "" || description == "" || amount <= 0) {
+                alert("Please fill in all fields correctly.");
+                return;
+            }
+
+            if (amount > getTrackerBalance(trackerId)) {
+                alert("You do not have enough money in this tracker.");
+                return;
+            }
+
+            const { error } = await supabase.from("expenses").insert({
+                id: String(Date.now()),
+                user_id: currentUser.id,
+                tracker_id: trackerId,
+                tracker_name: getTrackerName(trackerId),
+                date: date,
+                category: category,
+                description: description,
+                amount: amount
+            });
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            document.getElementById("expenseDate").value = "";
+            document.getElementById("expenseCategory").value = "";
+            document.getElementById("expenseDescription").value = "";
+            document.getElementById("expenseAmount").value = "";
+            await loadCloudData();
+            alert("Expense added successfully.");
+        }
+
+        async function deleteExpense(expenseId) {
+            if (confirm("Are you sure you want to delete this expense?") == false) {
+                return;
+            }
+
+            const { error } = await supabase
+                .from("expenses")
+                .delete()
+                .eq("id", String(expenseId))
+                .eq("user_id", currentUser.id);
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            await loadCloudData();
+        }
+
+        async function deleteTracker(trackerId) {
+            if (confirm("Delete this tracker? Its expense history will stay in the History page.") == false) {
+                return;
+            }
+
+            let trackerName = getTrackerName(trackerId);
+
+            let updateResult = await supabase
+                .from("expenses")
+                .update({ tracker_name: trackerName })
+                .eq("tracker_id", String(trackerId))
+                .eq("user_id", currentUser.id);
+
+            if (updateResult.error) {
+                alert(updateResult.error.message);
+                return;
+            }
+
+            let deleteResult = await supabase
+                .from("trackers")
+                .delete()
+                .eq("id", String(trackerId))
+                .eq("user_id", currentUser.id);
+
+            if (deleteResult.error) {
+                alert(deleteResult.error.message);
+                return;
+            }
+
+            await loadCloudData();
+        }
+
+        async function importLocalDataToCloud() {
+            let oldTrackers = localStorage.getItem("trackers");
+            let oldExpenses = localStorage.getItem("expenses");
+            let oldSettings = localStorage.getItem("moneyTrackerSettings");
+
+            if (oldTrackers == null && oldExpenses == null && oldSettings == null) {
+                alert("No old local data found on this device.");
+                return;
+            }
+
+            if (confirm("This will copy old data from this browser into Supabase. Continue?") == false) {
+                return;
+            }
+
+            if (oldTrackers != null) {
+                let localTrackers = JSON.parse(oldTrackers);
+                let convertedTrackers = [];
+
+                for (let i = 0; i < localTrackers.length; i++) {
+                    let tracker = localTrackers[i];
+                    convertedTrackers.push({
+                        id: String(tracker.id),
+                        user_id: currentUser.id,
+                        name: tracker.name,
+                        starting_amount: Number(tracker.startingAmount || tracker.starting_amount || 0),
+                        added_money: Number(tracker.addedMoney || tracker.added_money || 0),
+                        created_date: tracker.createdDate || tracker.created_date || getTodayString()
+                    });
+                }
+
+                if (convertedTrackers.length > 0) {
+                    let { error } = await supabase.from("trackers").upsert(convertedTrackers);
+                    if (error) {
+                        alert(error.message);
+                        return;
+                    }
+                }
+            }
+
+            if (oldExpenses != null) {
+                let localExpenses = JSON.parse(oldExpenses);
+                let convertedExpenses = [];
+
+                for (let i = 0; i < localExpenses.length; i++) {
+                    let expense = localExpenses[i];
+                    convertedExpenses.push({
+                        id: String(expense.id),
+                        user_id: currentUser.id,
+                        tracker_id: String(expense.trackerId || expense.tracker_id),
+                        tracker_name: expense.trackerName || expense.tracker_name || "Imported Tracker",
+                        date: expense.date,
+                        category: expense.category,
+                        description: expense.description,
+                        amount: Number(expense.amount)
+                    });
+                }
+
+                if (convertedExpenses.length > 0) {
+                    let { error } = await supabase.from("expenses").upsert(convertedExpenses);
+                    if (error) {
+                        alert(error.message);
+                        return;
+                    }
+                }
+            }
+
+            if (oldSettings != null) {
+                let localSettings = JSON.parse(oldSettings);
+                let { error } = await supabase.from("user_settings").upsert({
+                    user_id: currentUser.id,
+                    owner_name: localSettings.ownerName,
+                    app_name: localSettings.appName
+                });
+
+                if (error) {
+                    alert(error.message);
+                    return;
+                }
+            }
+
+            await loadCloudData();
+            alert("Old local data imported successfully.");
+        }
+
+        function showPage(pageId, buttonId) {
+            let pages = document.getElementsByClassName("page");
+            for (let i = 0; i < pages.length; i++) {
+                pages[i].classList.add("hidden");
+            }
+
+            let buttons = document.querySelectorAll(".nav button");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+
+            document.getElementById(pageId).classList.remove("hidden");
+            document.getElementById(buttonId).classList.add("active");
+            refreshApp();
+        }
+
+        function applySettings() {
+            document.title = settings.appName;
+            document.getElementById("authTitle").innerText = settings.appName;
+            document.getElementById("appTitleText").innerText = settings.appName;
+            document.getElementById("appSubtitleText").innerText = "Welcome back, " + settings.ownerName + ".";
+            document.getElementById("ownerNameInput").value = settings.ownerName;
+            document.getElementById("appNameInput").value = settings.appName;
+        }
+
+        function getTodayString() {
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = String(today.getMonth() + 1).padStart(2, "0");
+            let day = String(today.getDate()).padStart(2, "0");
+            return year + "-" + month + "-" + day;
+        }
+
+        function getTrackerById(trackerId) {
+            for (let i = 0; i < trackers.length; i++) {
+                if (String(trackers[i].id) == String(trackerId)) {
+                    return trackers[i];
+                }
+            }
+
+            return null;
+        }
+
+        function getTrackerSpent(trackerId) {
+            let spent = 0;
+
+            for (let i = 0; i < expenses.length; i++) {
+                if (String(expenses[i].tracker_id) == String(trackerId)) {
+                    spent = spent + Number(expenses[i].amount);
+                }
+            }
+
+            return spent;
+        }
+
+        function getTrackerTotalMoney(tracker) {
+            return Number(tracker.starting_amount) + Number(tracker.added_money);
+        }
+
+        function getTrackerBalance(trackerId) {
+            let tracker = getTrackerById(trackerId);
+
+            if (tracker == null) {
+                return 0;
+            }
+
+            return getTrackerTotalMoney(tracker) - getTrackerSpent(trackerId);
+        }
+
+        function getTrackerName(trackerId) {
+            let tracker = getTrackerById(trackerId);
+
+            if (tracker != null) {
+                return tracker.name;
+            }
+
+            return "Deleted Tracker";
+        }
+
+        function getExpenseTrackerName(expense) {
+            let tracker = getTrackerById(expense.tracker_id);
+
+            if (tracker != null) {
+                return tracker.name;
+            }
+
+            if (expense.tracker_name) {
+                return expense.tracker_name;
+            }
+
+            return "Deleted Tracker";
+        }
+
+        function isTrackerDeleted(trackerId) {
+            return getTrackerById(trackerId) == null;
+        }
+
+        function getTrackerExpenses(trackerId) {
+            let trackerExpenses = [];
+
+            for (let i = 0; i < expenses.length; i++) {
+                if (String(expenses[i].tracker_id) == String(trackerId)) {
+                    trackerExpenses.push(expenses[i]);
+                }
+            }
+
+            return trackerExpenses;
+        }
+
+        function parseDate(dateText) {
+            return new Date(dateText + "T00:00:00");
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString(undefined, {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            });
+        }
+
+        function calculateTrackerAnalysis(trackerId, balance) {
+            let trackerExpenses = getTrackerExpenses(trackerId);
+
+            if (trackerExpenses.length == 0) {
+                return {
+                    hasData: false,
+                    message: "No expenses yet. Add a few expenses and I can estimate when this money may finish."
+                };
+            }
+
+            let totalSpent = 0;
+            let firstDate = parseDate(trackerExpenses[0].date);
+            let lastDate = parseDate(trackerExpenses[0].date);
+
+            for (let i = 0; i < trackerExpenses.length; i++) {
+                let expenseDate = parseDate(trackerExpenses[i].date);
+                totalSpent = totalSpent + Number(trackerExpenses[i].amount);
+
+                if (expenseDate < firstDate) {
+                    firstDate = expenseDate;
+                }
+
+                if (expenseDate > lastDate) {
+                    lastDate = expenseDate;
+                }
+            }
+
+            let millisecondsPerDay = 1000 * 60 * 60 * 24;
+            let daysCovered = Math.floor((lastDate - firstDate) / millisecondsPerDay) + 1;
+
+            if (daysCovered < 1) {
+                daysCovered = 1;
+            }
+
+            let averageDailySpend = totalSpent / daysCovered;
+            let daysLeft = Math.floor(balance / averageDailySpend);
+            let finishDate = new Date();
+            finishDate.setDate(finishDate.getDate() + daysLeft);
+
+            let statusMessage = "At this pace, this tracker may finish in about " + daysLeft + " day(s).";
+            let statusClass = "good-text";
+
+            if (daysLeft <= 3 || balance <= 0) {
+                statusMessage = balance <= 0 ? "This tracker has finished." : "Careful. This tracker may finish very soon.";
+                statusClass = "warning-text";
+            }
+
+            return {
+                hasData: true,
+                averageDailySpend: averageDailySpend,
+                daysLeft: daysLeft,
+                finishDate: finishDate,
+                statusMessage: statusMessage,
+                statusClass: statusClass
+            };
+        }
+
+        function displayTrackerAnalysis(trackerId, balance) {
+            let analysis = calculateTrackerAnalysis(trackerId, balance);
+
+            if (analysis.hasData == false) {
+                return `<div class="analysis-box"><h4>Spending Analysis</h4><p>${analysis.message}</p></div>`;
+            }
+
+            return `
+                <div class="analysis-box">
+                    <h4>Spending Analysis</h4>
+                    <p>Average spending: <strong>GHS ${analysis.averageDailySpend.toFixed(2)}</strong> per day</p>
+                    <p>Estimated days left: <strong>${analysis.daysLeft}</strong></p>
+                    <p>Estimated finish date: <strong>${formatDate(analysis.finishDate)}</strong></p>
+                    <p class="${analysis.statusClass}">${analysis.statusMessage}</p>
+                </div>
+            `;
+        }
+
+        function displayOverallAnalysis() {
+            let overallAnalysis = document.getElementById("overallAnalysis");
+
+            if (trackers.length == 0) {
+                overallAnalysis.innerHTML = '<p class="small-text">Add trackers and expenses to see spending predictions.</p>';
+                return;
+            }
+
+            let soonestTrackerName = "";
+            let soonestDays = null;
+            let totalAverageDailySpend = 0;
+            let trackersWithData = 0;
+
+            for (let i = 0; i < trackers.length; i++) {
+                let balance = getTrackerBalance(trackers[i].id);
+                let analysis = calculateTrackerAnalysis(trackers[i].id, balance);
+
+                if (analysis.hasData == true) {
+                    totalAverageDailySpend = totalAverageDailySpend + analysis.averageDailySpend;
+                    trackersWithData = trackersWithData + 1;
+
+                    if (soonestDays == null || analysis.daysLeft < soonestDays) {
+                        soonestDays = analysis.daysLeft;
+                        soonestTrackerName = trackers[i].name;
+                    }
+                }
+            }
+
+            if (trackersWithData == 0) {
+                overallAnalysis.innerHTML = '<p class="small-text">No spending habits yet. After you add expenses, the app will estimate when each allowance may finish.</p>';
+                return;
+            }
+
+            overallAnalysis.innerHTML = `
+                <p>You are currently spending about <strong>GHS ${totalAverageDailySpend.toFixed(2)}</strong> per day across your active trackers.</p>
+                <p>The tracker likely to finish first is <strong>${soonestTrackerName}</strong>, in about <strong>${soonestDays}</strong> day(s).</p>
+            `;
+        }
+
+        function displayHome() {
+            let totalAllowance = 0;
+            let totalSpent = 0;
+            let totalBalance = 0;
+
+            for (let i = 0; i < trackers.length; i++) {
+                let trackerTotal = getTrackerTotalMoney(trackers[i]);
+                let trackerSpent = getTrackerSpent(trackers[i].id);
+                let trackerBalance = trackerTotal - trackerSpent;
+
+                totalAllowance = totalAllowance + trackerTotal;
+                totalSpent = totalSpent + trackerSpent;
+                totalBalance = totalBalance + trackerBalance;
+            }
+
+            document.getElementById("totalAllowance").innerText = totalAllowance.toFixed(2);
+            document.getElementById("totalSpent").innerText = totalSpent.toFixed(2);
+            document.getElementById("totalBalance").innerText = totalBalance.toFixed(2);
+            document.getElementById("trackerCount").innerText = trackers.length;
+
+            displayOverallAnalysis();
+
+            let trackerList = document.getElementById("trackerList");
+            trackerList.innerHTML = "";
+
+            if (trackers.length == 0) {
+                trackerList.innerHTML = '<div class="card empty-message">No trackers yet. Add one from the Trackers page.</div>';
+                return;
+            }
+
+            for (let i = 0; i < trackers.length; i++) {
+                let tracker = trackers[i];
+                let trackerTotal = getTrackerTotalMoney(tracker);
+                let trackerSpent = getTrackerSpent(tracker.id);
+                let trackerBalance = trackerTotal - trackerSpent;
+                let balanceClass = trackerBalance <= trackerTotal * 0.25 ? "balance low-balance" : "balance";
+
+                trackerList.innerHTML += `
+                    <div class="card tracker-card">
+                        <div class="tracker-top">
+                            <h3>${tracker.name}</h3>
+                            <button class="danger-btn" onclick="deleteTracker('${tracker.id}')">Delete</button>
+                        </div>
+                        <p>Total Money: GHS ${trackerTotal.toFixed(2)}</p>
+                        <p>Spent: GHS ${trackerSpent.toFixed(2)}</p>
+                        <p>Balance:</p>
+                        <p class="${balanceClass}">GHS ${trackerBalance.toFixed(2)}</p>
+                        ${displayTrackerAnalysis(tracker.id, trackerBalance)}
+                    </div>
+                `;
+            }
+        }
+
+        function displayTrackerOptions() {
+            let expenseTracker = document.getElementById("expenseTracker");
+            let topUpTracker = document.getElementById("topUpTracker");
+
+            expenseTracker.innerHTML = '<option value="0">Choose tracker</option>';
+            topUpTracker.innerHTML = '<option value="0">Choose tracker</option>';
+
+            for (let i = 0; i < trackers.length; i++) {
+                expenseTracker.innerHTML += `<option value="${trackers[i].id}">${trackers[i].name}</option>`;
+                topUpTracker.innerHTML += `<option value="${trackers[i].id}">${trackers[i].name}</option>`;
+            }
+        }
+
+        function displayHistory() {
+            let historyList = document.getElementById("historyList");
+            let searchValue = document.getElementById("searchBox").value.toLowerCase();
+
+            historyList.innerHTML = "";
+
+            if (expenses.length == 0) {
+                historyList.innerHTML = '<div class="card empty-message">No expenses yet.</div>';
+                return;
+            }
+
+            let found = false;
+
+            for (let i = expenses.length - 1; i >= 0; i--) {
+                let expense = expenses[i];
+                let trackerName = getExpenseTrackerName(expense);
+                let deletedText = isTrackerDeleted(expense.tracker_id) ? ' <span class="deleted-badge">Tracker deleted</span>' : "";
+                let textToSearch = (trackerName + " " + expense.category + " " + expense.description).toLowerCase();
+
+                if (textToSearch.includes(searchValue)) {
+                    historyList.innerHTML += `
+                        <div class="card expense-item">
+                            <p><strong>Tracker:</strong> ${trackerName}${deletedText}</p>
+                            <p><strong>Date:</strong> ${expense.date}</p>
+                            <p><strong>Category:</strong> ${expense.category}</p>
+                            <p><strong>Description:</strong> ${expense.description}</p>
+                            <p><strong>Amount:</strong> GHS ${Number(expense.amount).toFixed(2)}</p>
+                            <button class="danger-btn" onclick="deleteExpense('${expense.id}')">Delete Expense</button>
+                        </div>
+                    `;
+                    found = true;
+                }
+            }
+
+            if (found == false) {
+                historyList.innerHTML = '<div class="card empty-message">No matching expenses found.</div>';
+            }
+        }
+
+        function refreshApp() {
+            applySettings();
+            displayHome();
+            displayTrackerOptions();
+            displayHistory();
+        }
+
+        async function startApp() {
+            if (SUPABASE_URL == "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE") {
+                document.getElementById("authError").innerText = "Paste your Supabase Project URL in index.html before using the app.";
+                return;
+            }
+
+            const { data } = await supabase.auth.getSession();
+
+            if (data.session != null) {
+                currentUser = data.session.user;
+                await ensureUserSettings();
+                await loadCloudData();
+                unlockApp();
+            } else {
+                showAuthScreen();
+            }
+        }
+
+        document.getElementById("emailInput").addEventListener("keydown", function(event) {
+            if (event.key == "Enter") {
+                signInUser();
+            }
+        });
+
+        document.getElementById("passwordInput").addEventListener("keydown", function(event) {
+            if (event.key == "Enter") {
+                signInUser();
+            }
+        });
+
+        window.signUpUser = signUpUser;
+        window.signInUser = signInUser;
+        window.logout = logout;
+        window.saveSettings = saveSettings;
+        window.importLocalDataToCloud = importLocalDataToCloud;
+        window.addTracker = addTracker;
+        window.topUpTracker = topUpTracker;
+        window.addExpense = addExpense;
+        window.deleteExpense = deleteExpense;
+        window.deleteTracker = deleteTracker;
+        window.displayHistory = displayHistory;
+        window.showPage = showPage;
+
+        startApp();
+
+        setInterval(function() {
+            if (currentUser != null) {
+                loadCloudData();
+            }
+        }, 15000);
+
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden == false && currentUser != null) {
+                loadCloudData();
+            }
+        });
+    </script>
+</body>
+</html>
