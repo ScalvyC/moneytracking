@@ -6,9 +6,7 @@
     <title>Ezra's Money Tracker</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -33,19 +31,9 @@
             box-shadow: 0 8px 20px rgba(31, 111, 235, 0.25);
         }
 
-        .header h1 {
-            margin: 0;
-            font-size: 27px;
-        }
-
-        .header p {
-            margin: 6px 0 0;
-            opacity: 0.92;
-        }
-
-        .section {
-            padding: 15px;
-        }
+        .header h1 { margin: 0; font-size: 27px; }
+        .header p { margin: 6px 0 0; opacity: 0.92; }
+        .section { padding: 15px; }
 
         .card {
             background-color: white;
@@ -95,26 +83,10 @@
             cursor: pointer;
         }
 
-        button:active {
-            transform: scale(0.98);
-        }
-
-        button:disabled {
-            background-color: #9ba7ba;
-            cursor: not-allowed;
-        }
-
-        .danger-btn {
-            background-color: #d62828;
-        }
-
-        .secondary-btn {
-            background-color: #444;
-        }
-
-        .tracker-card {
-            border-left: 6px solid #1f6feb;
-        }
+        button:active { transform: scale(0.98); }
+        .danger-btn { background-color: #d62828; }
+        .secondary-btn { background-color: #444; }
+        .tracker-card { border-left: 6px solid #1f6feb; }
 
         .tracker-top {
             display: flex;
@@ -123,9 +95,7 @@
             gap: 10px;
         }
 
-        .tracker-top h3 {
-            margin: 0;
-        }
+        .tracker-top h3 { margin: 0; }
 
         .balance {
             font-size: 22px;
@@ -133,9 +103,7 @@
             color: #0a7a35;
         }
 
-        .low-balance {
-            color: #d62828;
-        }
+        .low-balance { color: #d62828; }
 
         .analysis-box {
             background: #f8fbff;
@@ -150,19 +118,9 @@
             color: #1f6feb;
         }
 
-        .analysis-box p, .tracker-card p, .expense-item p {
-            margin: 6px 0;
-        }
-
-        .warning-text {
-            color: #d62828;
-            font-weight: bold;
-        }
-
-        .good-text {
-            color: #0a7a35;
-            font-weight: bold;
-        }
+        .analysis-box p, .tracker-card p, .expense-item p { margin: 6px 0; }
+        .warning-text { color: #d62828; font-weight: bold; }
+        .good-text { color: #0a7a35; font-weight: bold; }
 
         .expense-item {
             background-color: #f7f7f7;
@@ -187,9 +145,7 @@
             padding: 15px;
         }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         .nav {
             position: fixed;
@@ -221,10 +177,7 @@
             border-top: 3px solid #1f6feb;
         }
 
-        .small-text {
-            font-size: 13px;
-            color: #666;
-        }
+        .small-text { font-size: 13px; color: #666; }
 
         .auth-wrapper {
             min-height: 100vh;
@@ -250,22 +203,9 @@
             color: #1f6feb;
         }
 
-        .auth-card p {
-            color: #555;
-            margin-top: 0;
-        }
-
-        .auth-error {
-            color: #d62828;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .auth-success {
-            color: #0a7a35;
-            font-size: 14px;
-            margin-top: 10px;
-        }
+        .auth-card p { color: #555; margin-top: 0; }
+        .auth-error { color: #d62828; font-size: 14px; margin-top: 10px; }
+        .auth-success { color: #0a7a35; font-size: 14px; margin-top: 10px; }
 
         .header-top {
             display: flex;
@@ -335,14 +275,8 @@
         }
 
         @keyframes popIn {
-            from {
-                transform: scale(0.92);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+            from { transform: scale(0.92); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -356,8 +290,8 @@
             <input type="email" id="emailInput" placeholder="Email address">
             <input type="password" id="passwordInput" placeholder="Password">
 
-            <button id="signInButton" onclick="signInUser()">Sign In</button>
-            <button id="signUpButton" class="secondary-btn" onclick="signUpUser()">Create Account</button>
+            <button onclick="signInUser()">Sign In</button>
+            <button class="secondary-btn" onclick="signUpUser()">Create Account</button>
             <p id="authError" class="auth-error"></p>
             <p id="authSuccess" class="auth-success"></p>
         </div>
@@ -387,22 +321,10 @@
             <div class="card">
                 <h2>Full Summary</h2>
                 <div class="summary-grid">
-                    <div class="summary-box">
-                        <small>Total Allowance</small>
-                        <strong>GHS <span id="totalAllowance">0</span></strong>
-                    </div>
-                    <div class="summary-box">
-                        <small>Total Spent</small>
-                        <strong>GHS <span id="totalSpent">0</span></strong>
-                    </div>
-                    <div class="summary-box">
-                        <small>Total Balance</small>
-                        <strong>GHS <span id="totalBalance">0</span></strong>
-                    </div>
-                    <div class="summary-box">
-                        <small>Trackers</small>
-                        <strong><span id="trackerCount">0</span></strong>
-                    </div>
+                    <div class="summary-box"><small>Total Allowance</small><strong>GHS <span id="totalAllowance">0</span></strong></div>
+                    <div class="summary-box"><small>Total Spent</small><strong>GHS <span id="totalSpent">0</span></strong></div>
+                    <div class="summary-box"><small>Total Balance</small><strong>GHS <span id="totalBalance">0</span></strong></div>
+                    <div class="summary-box"><small>Trackers</small><strong><span id="trackerCount">0</span></strong></div>
                 </div>
             </div>
 
@@ -419,10 +341,8 @@
             <div class="card">
                 <h2>Customize App</h2>
                 <p class="small-text">This customization syncs across your devices.</p>
-
                 <input type="text" id="ownerNameInput" placeholder="Your name e.g. Ezra">
                 <input type="text" id="appNameInput" placeholder="App name e.g. Ezra's Money Tracker">
-
                 <button onclick="saveSettings()">Save Customization</button>
             </div>
 
@@ -435,20 +355,16 @@
             <div class="card">
                 <h2>Add New Tracker</h2>
                 <p class="small-text">Examples: School Allowance, Home Allowance, Transport Money, Food Budget.</p>
-
                 <input type="text" id="trackerName" placeholder="Tracker name">
                 <input type="number" id="trackerAmount" placeholder="Starting amount in GHS">
-
                 <button onclick="addTracker()">Add Tracker</button>
             </div>
 
             <div class="card">
                 <h2>Add Money to Existing Tracker</h2>
                 <p class="small-text">Use this when you receive extra allowance.</p>
-
                 <select id="topUpTracker"></select>
                 <input type="number" id="topUpAmount" placeholder="Amount to add in GHS">
-
                 <button onclick="topUpTracker()">Add Money</button>
             </div>
         </div>
@@ -457,13 +373,11 @@
             <div class="card">
                 <h2>Add Expense</h2>
                 <p class="small-text">Choose which allowance the expense should deduct from.</p>
-
                 <select id="expenseTracker"></select>
                 <input type="date" id="expenseDate">
                 <input type="text" id="expenseCategory" placeholder="Category e.g. Food, Transport">
                 <input type="text" id="expenseDescription" placeholder="Description e.g. Lunch at campus">
                 <input type="number" id="expenseAmount" placeholder="Amount spent in GHS">
-
                 <button onclick="addExpense()">Add Expense</button>
             </div>
         </div>
@@ -474,7 +388,6 @@
                 <p class="small-text">Deleted tracker expenses will still stay here.</p>
                 <input type="text" id="searchBox" placeholder="Search by category, description, or tracker" onkeyup="displayHistory()">
             </div>
-
             <div id="historyList"></div>
         </div>
     </div>
@@ -487,35 +400,92 @@
     </div>
 
     <script type="module">
-        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-        /*
-            IMPORTANT:
-            1. Paste your Supabase Project URL below.
-            2. The publishable key is okay in frontend code when RLS is enabled.
-            3. Never place your sb_secret key here.
-        */
-        const SUPABASE_URL = "https://lukvbvjiptsozgrozfkv.supabase.coRE";
+        const SUPABASE_URL = "https://lukvbvjiptsozgrozfkv.supabase.co";
         const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_1mqU4kwtV-u9vBROR3-B0g_m3Oqv7fn";
-
         const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-        let currentUser = null;
         let trackers = [];
         let expenses = [];
-        let settings = {
-            ownerName: "Ezra",
-            appName: "Ezra's Money Tracker"
-        };
+        let currentUser = null;
+        let settings = { ownerName: "Ezra", appName: "Ezra's Money Tracker" };
 
-        function setLoading(isLoading) {
-            document.getElementById("signInButton").disabled = isLoading;
-            document.getElementById("signUpButton").disabled = isLoading;
+        function cleanError(error) {
+            if (!error) return "Something went wrong.";
+            if (error.message) return error.message;
+            return String(error);
         }
 
         function clearAuthMessages() {
             document.getElementById("authError").innerText = "";
             document.getElementById("authSuccess").innerText = "";
+        }
+
+        async function signUpUser() {
+            clearAuthMessages();
+
+            let email = document.getElementById("emailInput").value.trim();
+            let password = document.getElementById("passwordInput").value;
+
+            if (email == "" || password == "") {
+                document.getElementById("authError").innerText = "Please enter your email and password.";
+                return;
+            }
+
+            if (password.length < 6) {
+                document.getElementById("authError").innerText = "Password must be at least 6 characters.";
+                return;
+            }
+
+            const { data, error } = await supabase.auth.signUp({ email: email, password: password });
+
+            if (error) {
+                document.getElementById("authError").innerText = cleanError(error);
+                return;
+            }
+
+            if (data.session == null) {
+                document.getElementById("authSuccess").innerText = "Account created. Check your email to confirm, then sign in.";
+                return;
+            }
+
+            currentUser = data.user;
+            await createDefaultSettingsIfNeeded();
+            await loadCloudData();
+            unlockApp();
+        }
+
+        async function signInUser() {
+            clearAuthMessages();
+
+            let email = document.getElementById("emailInput").value.trim();
+            let password = document.getElementById("passwordInput").value;
+
+            if (email == "" || password == "") {
+                document.getElementById("authError").innerText = "Please enter your email and password.";
+                return;
+            }
+
+            const { data, error } = await supabase.auth.signInWithPassword({ email: email, password: password });
+
+            if (error) {
+                document.getElementById("authError").innerText = cleanError(error);
+                return;
+            }
+
+            currentUser = data.user;
+            await createDefaultSettingsIfNeeded();
+            await loadCloudData();
+            unlockApp();
+        }
+
+        async function logout() {
+            await supabase.auth.signOut();
+            currentUser = null;
+            trackers = [];
+            expenses = [];
+            showAuthScreen();
         }
 
         function showAuthScreen() {
@@ -537,147 +507,53 @@
         function showWelcomeScreen() {
             document.getElementById("welcomeTitle").innerText = "Welcome, " + settings.ownerName;
             document.getElementById("welcomeScreen").classList.remove("hidden");
-
             setTimeout(function() {
                 document.getElementById("welcomeScreen").classList.add("hidden");
             }, 1300);
         }
 
-        async function signUpUser() {
-            clearAuthMessages();
-            setLoading(true);
-
-            let email = document.getElementById("emailInput").value.trim();
-            let password = document.getElementById("passwordInput").value;
-
-            if (email == "" || password == "") {
-                document.getElementById("authError").innerText = "Please enter your email and password.";
-                setLoading(false);
-                return;
-            }
-
-            if (password.length < 6) {
-                document.getElementById("authError").innerText = "Password must be at least 6 characters.";
-                setLoading(false);
-                return;
-            }
-
-            const { data, error } = await supabase.auth.signUp({
-                email: email,
-                password: password
-            });
-
-            if (error) {
-                document.getElementById("authError").innerText = error.message;
-                setLoading(false);
-                return;
-            }
-
-            if (data.session == null) {
-                document.getElementById("authSuccess").innerText = "Account created. Check your email to confirm before signing in.";
-                setLoading(false);
-                return;
-            }
-
-            currentUser = data.user;
-            await ensureUserSettings();
-            await loadCloudData();
-            unlockApp();
-            setLoading(false);
-        }
-
-        async function signInUser() {
-            clearAuthMessages();
-            setLoading(true);
-
-            let email = document.getElementById("emailInput").value.trim();
-            let password = document.getElementById("passwordInput").value;
-
-            if (email == "" || password == "") {
-                document.getElementById("authError").innerText = "Please enter your email and password.";
-                setLoading(false);
-                return;
-            }
-
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
-
-            if (error) {
-                document.getElementById("authError").innerText = error.message;
-                setLoading(false);
-                return;
-            }
-
-            currentUser = data.user;
-            await ensureUserSettings();
-            await loadCloudData();
-            unlockApp();
-            setLoading(false);
-        }
-
-        async function logout() {
-            await supabase.auth.signOut();
-            currentUser = null;
-            trackers = [];
-            expenses = [];
-            showAuthScreen();
-        }
-
-        async function ensureUserSettings() {
-            if (currentUser == null) {
-                return;
-            }
+        async function createDefaultSettingsIfNeeded() {
+            if (!currentUser) return;
 
             const { data, error } = await supabase
                 .from("user_settings")
-                .select("user_id, owner_name, app_name")
+                .select("user_id")
                 .eq("user_id", currentUser.id)
                 .maybeSingle();
 
-            if (error) {
-                alert(error.message);
-                return;
-            }
+            if (error) throw error;
 
-            if (data == null) {
-                await supabase.from("user_settings").insert({
-                    user_id: currentUser.id,
-                    owner_name: settings.ownerName,
-                    app_name: settings.appName
-                });
+            if (!data) {
+                const { error: insertError } = await supabase
+                    .from("user_settings")
+                    .insert({
+                        user_id: currentUser.id,
+                        owner_name: "Ezra",
+                        app_name: "Ezra's Money Tracker"
+                    });
+
+                if (insertError) throw insertError;
             }
         }
 
         async function loadCloudData() {
-            if (currentUser == null) {
-                return;
-            }
+            if (!currentUser) return;
 
             const trackersResult = await supabase
                 .from("trackers")
-                .select("*")
+                .select("id, user_id, name, starting_amount, added_money, created_date")
                 .eq("user_id", currentUser.id)
-                .order("created_at", { ascending: true });
+                .order("id", { ascending: true });
 
-            if (trackersResult.error) {
-                document.getElementById("syncStatus").innerText = "Sync issue";
-                alert(trackersResult.error.message);
-                return;
-            }
+            if (trackersResult.error) throw trackersResult.error;
 
             const expensesResult = await supabase
                 .from("expenses")
-                .select("*")
+                .select("id, user_id, tracker_id, tracker_name, date, category, description, amount")
                 .eq("user_id", currentUser.id)
-                .order("created_at", { ascending: true });
+                .order("id", { ascending: true });
 
-            if (expensesResult.error) {
-                document.getElementById("syncStatus").innerText = "Sync issue";
-                alert(expensesResult.error.message);
-                return;
-            }
+            if (expensesResult.error) throw expensesResult.error;
 
             const settingsResult = await supabase
                 .from("user_settings")
@@ -685,16 +561,12 @@
                 .eq("user_id", currentUser.id)
                 .maybeSingle();
 
-            if (settingsResult.error) {
-                document.getElementById("syncStatus").innerText = "Sync issue";
-                alert(settingsResult.error.message);
-                return;
-            }
+            if (settingsResult.error) throw settingsResult.error;
 
             trackers = trackersResult.data || [];
             expenses = expensesResult.data || [];
 
-            if (settingsResult.data != null) {
+            if (settingsResult.data) {
                 settings = {
                     ownerName: settingsResult.data.owner_name,
                     appName: settingsResult.data.app_name
@@ -702,6 +574,18 @@
             }
 
             document.getElementById("syncStatus").innerText = "Cloud sync active";
+            refreshApp();
+        }
+
+        function showPage(pageId, buttonId) {
+            let pages = document.getElementsByClassName("page");
+            for (let i = 0; i < pages.length; i++) pages[i].classList.add("hidden");
+
+            let buttons = document.querySelectorAll(".nav button");
+            for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
+
+            document.getElementById(pageId).classList.remove("hidden");
+            document.getElementById(buttonId).classList.add("active");
             refreshApp();
         }
 
@@ -723,7 +607,7 @@
                 });
 
             if (error) {
-                alert(error.message);
+                alert(cleanError(error));
                 return;
             }
 
@@ -740,17 +624,19 @@
                 return;
             }
 
-            const { error } = await supabase.from("trackers").insert({
-                id: String(Date.now()),
+            let tracker = {
+                id: Date.now(),
                 user_id: currentUser.id,
                 name: name,
                 starting_amount: amount,
                 added_money: 0,
                 created_date: getTodayString()
-            });
+            };
+
+            const { error } = await supabase.from("trackers").insert(tracker);
 
             if (error) {
-                alert(error.message);
+                alert(cleanError(error));
                 return;
             }
 
@@ -761,29 +647,30 @@
         }
 
         async function topUpTracker() {
-            let trackerId = document.getElementById("topUpTracker").value;
+            let trackerId = Number(document.getElementById("topUpTracker").value);
             let amount = Number(document.getElementById("topUpAmount").value);
 
-            if (trackerId == "0" || amount <= 0) {
+            if (trackerId == 0 || amount <= 0) {
                 alert("Please choose a tracker and enter a valid amount.");
                 return;
             }
 
-            let selectedTracker = getTrackerById(trackerId);
-
-            if (selectedTracker == null) {
+            let tracker = trackers.find(t => Number(t.id) == trackerId);
+            if (!tracker) {
                 alert("Tracker not found.");
                 return;
             }
 
+            let newAddedMoney = Number(tracker.added_money) + amount;
+
             const { error } = await supabase
                 .from("trackers")
-                .update({ added_money: Number(selectedTracker.added_money) + amount })
+                .update({ added_money: newAddedMoney })
                 .eq("id", trackerId)
                 .eq("user_id", currentUser.id);
 
             if (error) {
-                alert(error.message);
+                alert(cleanError(error));
                 return;
             }
 
@@ -793,13 +680,13 @@
         }
 
         async function addExpense() {
-            let trackerId = document.getElementById("expenseTracker").value;
+            let trackerId = Number(document.getElementById("expenseTracker").value);
             let date = document.getElementById("expenseDate").value;
             let category = document.getElementById("expenseCategory").value.trim();
             let description = document.getElementById("expenseDescription").value.trim();
             let amount = Number(document.getElementById("expenseAmount").value);
 
-            if (trackerId == "0" || date == "" || category == "" || description == "" || amount <= 0) {
+            if (trackerId == 0 || date == "" || category == "" || description == "" || amount <= 0) {
                 alert("Please fill in all fields correctly.");
                 return;
             }
@@ -809,8 +696,8 @@
                 return;
             }
 
-            const { error } = await supabase.from("expenses").insert({
-                id: String(Date.now()),
+            let expense = {
+                id: Date.now(),
                 user_id: currentUser.id,
                 tracker_id: trackerId,
                 tracker_name: getTrackerName(trackerId),
@@ -818,10 +705,12 @@
                 category: category,
                 description: description,
                 amount: amount
-            });
+            };
+
+            const { error } = await supabase.from("expenses").insert(expense);
 
             if (error) {
-                alert(error.message);
+                alert(cleanError(error));
                 return;
             }
 
@@ -834,18 +723,16 @@
         }
 
         async function deleteExpense(expenseId) {
-            if (confirm("Are you sure you want to delete this expense?") == false) {
-                return;
-            }
+            if (!confirm("Are you sure you want to delete this expense?")) return;
 
             const { error } = await supabase
                 .from("expenses")
                 .delete()
-                .eq("id", String(expenseId))
+                .eq("id", expenseId)
                 .eq("user_id", currentUser.id);
 
             if (error) {
-                alert(error.message);
+                alert(cleanError(error));
                 return;
             }
 
@@ -853,31 +740,29 @@
         }
 
         async function deleteTracker(trackerId) {
-            if (confirm("Delete this tracker? Its expense history will stay in the History page.") == false) {
-                return;
-            }
+            if (!confirm("Delete this tracker? Its expense history will stay in the History page.")) return;
 
             let trackerName = getTrackerName(trackerId);
 
-            let updateResult = await supabase
+            const updateResult = await supabase
                 .from("expenses")
                 .update({ tracker_name: trackerName })
-                .eq("tracker_id", String(trackerId))
+                .eq("tracker_id", trackerId)
                 .eq("user_id", currentUser.id);
 
             if (updateResult.error) {
-                alert(updateResult.error.message);
+                alert(cleanError(updateResult.error));
                 return;
             }
 
-            let deleteResult = await supabase
+            const deleteResult = await supabase
                 .from("trackers")
                 .delete()
-                .eq("id", String(trackerId))
+                .eq("id", trackerId)
                 .eq("user_id", currentUser.id);
 
             if (deleteResult.error) {
-                alert(deleteResult.error.message);
+                alert(cleanError(deleteResult.error));
                 return;
             }
 
@@ -894,94 +779,55 @@
                 return;
             }
 
-            if (confirm("This will copy old data from this browser into Supabase. Continue?") == false) {
-                return;
-            }
+            if (!confirm("This will copy old data from this browser into your Supabase account. Continue?")) return;
 
-            if (oldTrackers != null) {
-                let localTrackers = JSON.parse(oldTrackers);
-                let convertedTrackers = [];
+            try {
+                if (oldTrackers != null) {
+                    let localTrackers = JSON.parse(oldTrackers);
+                    for (let i = 0; i < localTrackers.length; i++) {
+                        let tracker = localTrackers[i];
+                        await supabase.from("trackers").upsert({
+                            id: tracker.id,
+                            user_id: currentUser.id,
+                            name: tracker.name,
+                            starting_amount: Number(tracker.startingAmount || tracker.starting_amount),
+                            added_money: Number(tracker.addedMoney || tracker.added_money || 0),
+                            created_date: tracker.createdDate || tracker.created_date || getTodayString()
+                        });
+                    }
+                }
 
-                for (let i = 0; i < localTrackers.length; i++) {
-                    let tracker = localTrackers[i];
-                    convertedTrackers.push({
-                        id: String(tracker.id),
+                if (oldExpenses != null) {
+                    let localExpenses = JSON.parse(oldExpenses);
+                    for (let i = 0; i < localExpenses.length; i++) {
+                        let expense = localExpenses[i];
+                        await supabase.from("expenses").upsert({
+                            id: expense.id,
+                            user_id: currentUser.id,
+                            tracker_id: expense.trackerId || expense.tracker_id,
+                            tracker_name: expense.trackerName || expense.tracker_name || "Imported Tracker",
+                            date: expense.date,
+                            category: expense.category,
+                            description: expense.description,
+                            amount: Number(expense.amount)
+                        });
+                    }
+                }
+
+                if (oldSettings != null) {
+                    let localSettings = JSON.parse(oldSettings);
+                    await supabase.from("user_settings").upsert({
                         user_id: currentUser.id,
-                        name: tracker.name,
-                        starting_amount: Number(tracker.startingAmount || tracker.starting_amount || 0),
-                        added_money: Number(tracker.addedMoney || tracker.added_money || 0),
-                        created_date: tracker.createdDate || tracker.created_date || getTodayString()
+                        owner_name: localSettings.ownerName,
+                        app_name: localSettings.appName
                     });
                 }
 
-                if (convertedTrackers.length > 0) {
-                    let { error } = await supabase.from("trackers").upsert(convertedTrackers);
-                    if (error) {
-                        alert(error.message);
-                        return;
-                    }
-                }
+                await loadCloudData();
+                alert("Old local data imported successfully.");
+            } catch (error) {
+                alert(cleanError(error));
             }
-
-            if (oldExpenses != null) {
-                let localExpenses = JSON.parse(oldExpenses);
-                let convertedExpenses = [];
-
-                for (let i = 0; i < localExpenses.length; i++) {
-                    let expense = localExpenses[i];
-                    convertedExpenses.push({
-                        id: String(expense.id),
-                        user_id: currentUser.id,
-                        tracker_id: String(expense.trackerId || expense.tracker_id),
-                        tracker_name: expense.trackerName || expense.tracker_name || "Imported Tracker",
-                        date: expense.date,
-                        category: expense.category,
-                        description: expense.description,
-                        amount: Number(expense.amount)
-                    });
-                }
-
-                if (convertedExpenses.length > 0) {
-                    let { error } = await supabase.from("expenses").upsert(convertedExpenses);
-                    if (error) {
-                        alert(error.message);
-                        return;
-                    }
-                }
-            }
-
-            if (oldSettings != null) {
-                let localSettings = JSON.parse(oldSettings);
-                let { error } = await supabase.from("user_settings").upsert({
-                    user_id: currentUser.id,
-                    owner_name: localSettings.ownerName,
-                    app_name: localSettings.appName
-                });
-
-                if (error) {
-                    alert(error.message);
-                    return;
-                }
-            }
-
-            await loadCloudData();
-            alert("Old local data imported successfully.");
-        }
-
-        function showPage(pageId, buttonId) {
-            let pages = document.getElementsByClassName("page");
-            for (let i = 0; i < pages.length; i++) {
-                pages[i].classList.add("hidden");
-            }
-
-            let buttons = document.querySelectorAll(".nav button");
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove("active");
-            }
-
-            document.getElementById(pageId).classList.remove("hidden");
-            document.getElementById(buttonId).classList.add("active");
-            refreshApp();
         }
 
         function applySettings() {
@@ -1001,79 +847,51 @@
             return year + "-" + month + "-" + day;
         }
 
-        function getTrackerById(trackerId) {
-            for (let i = 0; i < trackers.length; i++) {
-                if (String(trackers[i].id) == String(trackerId)) {
-                    return trackers[i];
-                }
-            }
-
-            return null;
-        }
-
         function getTrackerSpent(trackerId) {
             let spent = 0;
-
             for (let i = 0; i < expenses.length; i++) {
-                if (String(expenses[i].tracker_id) == String(trackerId)) {
-                    spent = spent + Number(expenses[i].amount);
-                }
+                if (Number(expenses[i].tracker_id) == trackerId) spent += Number(expenses[i].amount);
             }
-
             return spent;
         }
 
         function getTrackerTotalMoney(tracker) {
-            return Number(tracker.starting_amount) + Number(tracker.added_money);
+            return Number(tracker.starting_amount) + Number(tracker.added_money || 0);
         }
 
         function getTrackerBalance(trackerId) {
-            let tracker = getTrackerById(trackerId);
-
-            if (tracker == null) {
-                return 0;
+            for (let i = 0; i < trackers.length; i++) {
+                if (Number(trackers[i].id) == trackerId) return getTrackerTotalMoney(trackers[i]) - getTrackerSpent(trackerId);
             }
-
-            return getTrackerTotalMoney(tracker) - getTrackerSpent(trackerId);
+            return 0;
         }
 
         function getTrackerName(trackerId) {
-            let tracker = getTrackerById(trackerId);
-
-            if (tracker != null) {
-                return tracker.name;
+            for (let i = 0; i < trackers.length; i++) {
+                if (Number(trackers[i].id) == trackerId) return trackers[i].name;
             }
-
             return "Deleted Tracker";
         }
 
         function getExpenseTrackerName(expense) {
-            let tracker = getTrackerById(expense.tracker_id);
-
-            if (tracker != null) {
-                return tracker.name;
+            for (let i = 0; i < trackers.length; i++) {
+                if (Number(trackers[i].id) == Number(expense.tracker_id)) return trackers[i].name;
             }
-
-            if (expense.tracker_name) {
-                return expense.tracker_name;
-            }
-
-            return "Deleted Tracker";
+            return expense.tracker_name || "Deleted Tracker";
         }
 
         function isTrackerDeleted(trackerId) {
-            return getTrackerById(trackerId) == null;
+            for (let i = 0; i < trackers.length; i++) {
+                if (Number(trackers[i].id) == Number(trackerId)) return false;
+            }
+            return true;
         }
 
         function getTrackerExpenses(trackerId) {
             let trackerExpenses = [];
-
             for (let i = 0; i < expenses.length; i++) {
-                if (String(expenses[i].tracker_id) == String(trackerId)) {
-                    trackerExpenses.push(expenses[i]);
-                }
+                if (Number(expenses[i].tracker_id) == trackerId) trackerExpenses.push(expenses[i]);
             }
-
             return trackerExpenses;
         }
 
@@ -1082,21 +900,14 @@
         }
 
         function formatDate(date) {
-            return date.toLocaleDateString(undefined, {
-                year: "numeric",
-                month: "short",
-                day: "numeric"
-            });
+            return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
         }
 
         function calculateTrackerAnalysis(trackerId, balance) {
             let trackerExpenses = getTrackerExpenses(trackerId);
 
             if (trackerExpenses.length == 0) {
-                return {
-                    hasData: false,
-                    message: "No expenses yet. Add a few expenses and I can estimate when this money may finish."
-                };
+                return { hasData: false, message: "No expenses yet. Add a few expenses and I can estimate when this money may finish." };
             }
 
             let totalSpent = 0;
@@ -1105,26 +916,17 @@
 
             for (let i = 0; i < trackerExpenses.length; i++) {
                 let expenseDate = parseDate(trackerExpenses[i].date);
-                totalSpent = totalSpent + Number(trackerExpenses[i].amount);
-
-                if (expenseDate < firstDate) {
-                    firstDate = expenseDate;
-                }
-
-                if (expenseDate > lastDate) {
-                    lastDate = expenseDate;
-                }
+                totalSpent += Number(trackerExpenses[i].amount);
+                if (expenseDate < firstDate) firstDate = expenseDate;
+                if (expenseDate > lastDate) lastDate = expenseDate;
             }
 
             let millisecondsPerDay = 1000 * 60 * 60 * 24;
             let daysCovered = Math.floor((lastDate - firstDate) / millisecondsPerDay) + 1;
-
-            if (daysCovered < 1) {
-                daysCovered = 1;
-            }
+            if (daysCovered < 1) daysCovered = 1;
 
             let averageDailySpend = totalSpent / daysCovered;
-            let daysLeft = Math.floor(balance / averageDailySpend);
+            let daysLeft = Math.max(0, Math.floor(balance / averageDailySpend));
             let finishDate = new Date();
             finishDate.setDate(finishDate.getDate() + daysLeft);
 
@@ -1136,20 +938,13 @@
                 statusClass = "warning-text";
             }
 
-            return {
-                hasData: true,
-                averageDailySpend: averageDailySpend,
-                daysLeft: daysLeft,
-                finishDate: finishDate,
-                statusMessage: statusMessage,
-                statusClass: statusClass
-            };
+            return { hasData: true, averageDailySpend, daysLeft, finishDate, statusMessage, statusClass };
         }
 
         function displayTrackerAnalysis(trackerId, balance) {
             let analysis = calculateTrackerAnalysis(trackerId, balance);
 
-            if (analysis.hasData == false) {
+            if (!analysis.hasData) {
                 return `<div class="analysis-box"><h4>Spending Analysis</h4><p>${analysis.message}</p></div>`;
             }
 
@@ -1178,13 +973,12 @@
             let trackersWithData = 0;
 
             for (let i = 0; i < trackers.length; i++) {
-                let balance = getTrackerBalance(trackers[i].id);
-                let analysis = calculateTrackerAnalysis(trackers[i].id, balance);
+                let balance = getTrackerBalance(Number(trackers[i].id));
+                let analysis = calculateTrackerAnalysis(Number(trackers[i].id), balance);
 
-                if (analysis.hasData == true) {
-                    totalAverageDailySpend = totalAverageDailySpend + analysis.averageDailySpend;
-                    trackersWithData = trackersWithData + 1;
-
+                if (analysis.hasData) {
+                    totalAverageDailySpend += analysis.averageDailySpend;
+                    trackersWithData++;
                     if (soonestDays == null || analysis.daysLeft < soonestDays) {
                         soonestDays = analysis.daysLeft;
                         soonestTrackerName = trackers[i].name;
@@ -1210,12 +1004,11 @@
 
             for (let i = 0; i < trackers.length; i++) {
                 let trackerTotal = getTrackerTotalMoney(trackers[i]);
-                let trackerSpent = getTrackerSpent(trackers[i].id);
+                let trackerSpent = getTrackerSpent(Number(trackers[i].id));
                 let trackerBalance = trackerTotal - trackerSpent;
-
-                totalAllowance = totalAllowance + trackerTotal;
-                totalSpent = totalSpent + trackerSpent;
-                totalBalance = totalBalance + trackerBalance;
+                totalAllowance += trackerTotal;
+                totalSpent += trackerSpent;
+                totalBalance += trackerBalance;
             }
 
             document.getElementById("totalAllowance").innerText = totalAllowance.toFixed(2);
@@ -1236,7 +1029,7 @@
             for (let i = 0; i < trackers.length; i++) {
                 let tracker = trackers[i];
                 let trackerTotal = getTrackerTotalMoney(tracker);
-                let trackerSpent = getTrackerSpent(tracker.id);
+                let trackerSpent = getTrackerSpent(Number(tracker.id));
                 let trackerBalance = trackerTotal - trackerSpent;
                 let balanceClass = trackerBalance <= trackerTotal * 0.25 ? "balance low-balance" : "balance";
 
@@ -1244,13 +1037,13 @@
                     <div class="card tracker-card">
                         <div class="tracker-top">
                             <h3>${tracker.name}</h3>
-                            <button class="danger-btn" onclick="deleteTracker('${tracker.id}')">Delete</button>
+                            <button class="danger-btn" onclick="deleteTracker(${tracker.id})">Delete</button>
                         </div>
                         <p>Total Money: GHS ${trackerTotal.toFixed(2)}</p>
                         <p>Spent: GHS ${trackerSpent.toFixed(2)}</p>
                         <p>Balance:</p>
                         <p class="${balanceClass}">GHS ${trackerBalance.toFixed(2)}</p>
-                        ${displayTrackerAnalysis(tracker.id, trackerBalance)}
+                        ${displayTrackerAnalysis(Number(tracker.id), trackerBalance)}
                     </div>
                 `;
             }
@@ -1272,7 +1065,6 @@
         function displayHistory() {
             let historyList = document.getElementById("historyList");
             let searchValue = document.getElementById("searchBox").value.toLowerCase();
-
             historyList.innerHTML = "";
 
             if (expenses.length == 0) {
@@ -1296,16 +1088,14 @@
                             <p><strong>Category:</strong> ${expense.category}</p>
                             <p><strong>Description:</strong> ${expense.description}</p>
                             <p><strong>Amount:</strong> GHS ${Number(expense.amount).toFixed(2)}</p>
-                            <button class="danger-btn" onclick="deleteExpense('${expense.id}')">Delete Expense</button>
+                            <button class="danger-btn" onclick="deleteExpense(${expense.id})">Delete Expense</button>
                         </div>
                     `;
                     found = true;
                 }
             }
 
-            if (found == false) {
-                historyList.innerHTML = '<div class="card empty-message">No matching expenses found.</div>';
-            }
+            if (!found) historyList.innerHTML = '<div class="card empty-message">No matching expenses found.</div>';
         }
 
         function refreshApp() {
@@ -1315,62 +1105,58 @@
             displayHistory();
         }
 
-        async function startApp() {
-            if (SUPABASE_URL == "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE") {
-                document.getElementById("authError").innerText = "Paste your Supabase Project URL in index.html before using the app.";
-                return;
-            }
+        document.getElementById("emailInput").addEventListener("keydown", function(event) {
+            if (event.key == "Enter") signInUser();
+        });
 
-            const { data } = await supabase.auth.getSession();
+        document.getElementById("passwordInput").addEventListener("keydown", function(event) {
+            if (event.key == "Enter") signInUser();
+        });
 
-            if (data.session != null) {
-                currentUser = data.session.user;
-                await ensureUserSettings();
+        supabase.auth.getSession().then(async function(result) {
+            if (result.data.session) {
+                currentUser = result.data.session.user;
+                await createDefaultSettingsIfNeeded();
                 await loadCloudData();
                 unlockApp();
             } else {
                 showAuthScreen();
             }
-        }
-
-        document.getElementById("emailInput").addEventListener("keydown", function(event) {
-            if (event.key == "Enter") {
-                signInUser();
-            }
+        }).catch(function(error) {
+            document.getElementById("authError").innerText = cleanError(error);
+            showAuthScreen();
         });
 
-        document.getElementById("passwordInput").addEventListener("keydown", function(event) {
-            if (event.key == "Enter") {
-                signInUser();
+        setInterval(function() {
+            if (currentUser != null) {
+                loadCloudData().catch(function(error) {
+                    document.getElementById("syncStatus").innerText = "Sync issue";
+                    console.log(error);
+                });
+            }
+        }, 10000);
+
+        document.addEventListener("visibilitychange", function() {
+            if (!document.hidden && currentUser != null) {
+                loadCloudData().catch(function(error) {
+                    document.getElementById("syncStatus").innerText = "Sync issue";
+                    console.log(error);
+                });
             }
         });
 
         window.signUpUser = signUpUser;
         window.signInUser = signInUser;
         window.logout = logout;
+        window.showPage = showPage;
         window.saveSettings = saveSettings;
-        window.importLocalDataToCloud = importLocalDataToCloud;
         window.addTracker = addTracker;
         window.topUpTracker = topUpTracker;
         window.addExpense = addExpense;
         window.deleteExpense = deleteExpense;
         window.deleteTracker = deleteTracker;
+        window.importLocalDataToCloud = importLocalDataToCloud;
         window.displayHistory = displayHistory;
-        window.showPage = showPage;
-
-        startApp();
-
-        setInterval(function() {
-            if (currentUser != null) {
-                loadCloudData();
-            }
-        }, 15000);
-
-        document.addEventListener("visibilitychange", function() {
-            if (document.hidden == false && currentUser != null) {
-                loadCloudData();
-            }
-        });
     </script>
 </body>
 </html>
